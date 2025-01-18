@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h2>Signup</h2>
-  <form id="signupForm">
-    <label for="signupUsername">Username:</label><br>
-    <input type="text" id="signupUsername" required><br>
-    <label for="signupPassword">Password:</label><br>
-    <input type="password" id="signupPassword" required><br>
-    <button type="button" onclick="signup()">Signup</button>
-  </form>
-  <p>Already have an account? <a href="login.html">Login here</a>.</p>
+  <div class="container">
+    <h2>Signup</h2>
+    <form id="signupForm">
+      <label for="signupUsername">Username:</label>
+      <input type="text" id="signupUsername" class="input-field" required>
+      <label for="signupPassword">Password:</label>
+      <input type="password" id="signupPassword" class="input-field" required>
+      <button type="button" onclick="signup()" class="btn">Signup</button>
+    </form>
+    <p id="signupMessage" class="message"></p>
+    <p>Already have an account? <a href="login.html" class="link">Login here</a>.</p>
+  </div>
 
   <script>
     const users = JSON.parse(localStorage.getItem('users')) || {};
@@ -22,16 +26,22 @@
     function signup() {
       const username = document.getElementById("signupUsername").value.trim();
       const password = document.getElementById("signupPassword").value.trim();
+      const message = document.getElementById("signupMessage");
 
       if (users[username]) {
-        alert("Username already exists!");
+        message.textContent = "Username already exists!";
+        message.style.color = "red";
       } else if (username && password) {
         users[username] = password;
         localStorage.setItem('users', JSON.stringify(users));
-        alert("Signup successful! You can now login.");
-        window.location.href = "login.html";
+        message.textContent = "Signup successful! You can now login.";
+        message.style.color = "green";
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       } else {
-        alert("Please fill out all fields.");
+        message.textContent = "Please fill out all fields.";
+        message.style.color = "red";
       }
     }
   </script>

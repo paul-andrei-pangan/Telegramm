@@ -4,25 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link rel="stylesheet" href="css/dstyle.css">
 </head>
 <body>
-  <h2>Welcome to the Dashboard!</h2>
-  <p id="welcomeMessage"></p>
-  <button onclick="logout()">Logout</button>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Dashboard</h2>
+      <ul class="menu">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">Chats</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header>
+        <h1>Welcome, <span id="username"></span>!</h1>
+      </header>
+      <section class="features">
+        <div class="feature-box">
+          <h3></h3>
+          <p></p>
+        </div>
+        <div class="feature-box">
+          <h3></h3>
+          <p></p>
+        </div>
+        <div class="feature-box">
+          <h3></h3>
+          <p></p>
+        </div>
+      </section>
+    </div>
+  </div>
 
   <script>
     const loggedInUser = localStorage.getItem('loggedInUser');
 
     if (!loggedInUser) {
-      alert("You must be logged in to access the dashboard.");
       window.location.href = "login.html";
     } else {
-      document.getElementById("welcomeMessage").textContent = "Hello, " + loggedInUser + "!";
+      document.getElementById("username").textContent = loggedInUser;
     }
 
     function logout() {
       localStorage.removeItem('loggedInUser');
-      alert("You have been logged out.");
       window.location.href = "login.html";
     }
   </script>
