@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+</head>
+<body>
+  <h2>Signup</h2>
+  <form id="signupForm">
+    <label for="signupUsername">Username:</label><br>
+    <input type="text" id="signupUsername" required><br>
+    <label for="signupPassword">Password:</label><br>
+    <input type="password" id="signupPassword" required><br>
+    <button type="button" onclick="signup()">Signup</button>
+  </form>
+  <p>Already have an account? <a href="login.html">Login here</a>.</p>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+
+    function signup() {
+      const username = document.getElementById("signupUsername").value.trim();
+      const password = document.getElementById("signupPassword").value.trim();
+
+      if (users[username]) {
+        alert("Username already exists!");
+      } else if (username && password) {
+        users[username] = password;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert("Signup successful! You can now login.");
+        window.location.href = "login.html";
+      } else {
+        alert("Please fill out all fields.");
+      }
+    }
+  </script>
+</body>
+</html>

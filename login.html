@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="loginUsername">Username:</label><br>
+    <input type="text" id="loginUsername" required><br>
+    <label for="loginPassword">Password:</label><br>
+    <input type="password" id="loginPassword" required><br>
+    <button type="button" onclick="login()">Login</button>
+  </form>
+  <p>Don't have an account? <a href="signup.html">Signup here</a>.</p>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+
+    function login() {
+      const username = document.getElementById("loginUsername").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      if (users[username] && users[username] === password) {
+        localStorage.setItem('loggedInUser', username);
+        alert("Login successful! Redirecting to Dashboard...");
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+  </script>
+</body>
+</html>
