@@ -21,22 +21,30 @@
   </div>
 
   <script>
-    const users = JSON.parse(localStorage.getItem('users')) || {};
-
     function login() {
       const username = document.getElementById("loginUsername").value.trim();
       const password = document.getElementById("loginPassword").value.trim();
       const message = document.getElementById("loginMessage");
 
-      if (users[username] && users[username] === password) {
-        localStorage.setItem('loggedInUser', username);
-        message.textContent = "Login successful! Redirecting to Dashboard...";
+      // Retrieve registered users from localStorage
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+
+      // Check if the user exists
+      const user = registeredUsers.find(user => user.username === username && user.password === password);
+
+      if (user) {
+        // Login successful, save the logged-in user to localStorage
+        localStorage.setItem("loggedInUser", username);
+        message.textContent = "Login successful! Redirecting to the dashboard...";
         message.style.color = "green";
+
+        // Redirect to the dashboard after 2 seconds
         setTimeout(() => {
           window.location.href = "dashboard.html";
         }, 2000);
       } else {
-        message.textContent = "Invalid username or password.";
+        // Login failed
+        message.textContent = "Invalid username or password. Please try again.";
         message.style.color = "red";
       }
     }

@@ -3,71 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Real-Time Chat Dashboard</title>
   <link rel="stylesheet" href="css/dstyle.css">
 </head>
 <body>
   <div class="dashboard-container">
     <!-- Sidebar -->
     <div class="sidebar">
-      <h2>Dashboard</h2>
-      <ul class="menu">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#" onclick="logout()">Logout</a></li>
+      <h2 id="userFullName">Users</h2>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search user..."
+        oninput="searchUser()"
+        class="search-bar"
+      />
+      <ul id="userList" class="menu">
+        <!-- User list will be dynamically populated -->
       </ul>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-      <header>
-        <h1>Welcome, <span id="username"></span>!</h1>
-      </header>
-      <section class="chat-container">
-        <div id="chatHistory" class="chat-history">
-          <!-- Chat messages will appear here -->
-        </div>
-        <div class="chat-input-container">
-          <input
-            type="text"
-            id="chatInput"
-            class="chat-input"
-            placeholder="Type your message here..."
-          />
-          <button onclick="sendMessage()" class="send-button">Send</button>
-        </div>
-      </section>
+    <!-- Chat Box (Initially Hidden) -->
+    <div id="chatBox" class="chat-window" style="display: none;">
+      <div class="chat-header">
+        <h3 id="chatWith">Chat</h3>
+        <button class="close-chat" onclick="closeChatBox()">✖</button>
+      </div>
+      <div id="chatHistory" class="chat-history">
+        <!-- Chat messages will appear here -->
+      </div>
+      <div class="chat-input-container">
+        <input
+          type="text"
+          id="chatInput"
+          class="chat-input"
+          placeholder="Type your message here..."
+          disabled
+        />
+        <button onclick="sendMessage()" class="send-button" disabled>Send</button>
+      </div>
     </div>
   </div>
 
   <script>
-    const loggedInUser = localStorage.getItem("loggedInUser");
+    const chatBox = document.getElementById("chatBox");
+    const chatHistoryElement = document.getElementById("chatHistory");
+    const chatInput = document.getElementById("chatInput");
+    const sendButton = document.querySelector(".send-button");
+    const userListElement = document.getElementById("userList");
+    const chatWithHeader = document.getElementById("chatWith");
+    const searchInput = document.getElementById("searchInput");
+    const userFullNameElement = document.getElementById("userFullName");
 
-    if (!loggedInUser) {
-      window.location.href = "login.html";
-    } else {
-      document.getElementById("username").textContent = loggedInUser;
+    let activeUser = null; // Currently selected user to chat with
+    const loggedInUser = localStorage.getItem("loggedInUser"); // Logged-in username
+    const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+
+    // Fetch full name of logged-in user
+    const loggedInUserInfo = registeredUsers.find(user => user.username === loggedInUser);
+    const loggedInUserFullName = loggedInUserInfo ? loggedInUserInfo.fullName : "User";
+
+    // Display full name in the sidebar heading
+    userFullNameElement.textContent = loggedInUserFullName;
+
+    // Populate user list
+    const availableUsers = registeredUsers.filter(user => user.username !== loggedInUser);
+    populateUserList(availableUsers.map(user => user.username));
+
+    function populateUserList(users) {
+      userListElement.innerHTML = ""; // Clear the user list
+      users.forEach(user => {
+        const li = document.createElement("li");
+        li.textContent = user;
+        li.className = "user-item";
+        li.onclick = () => selectUser(user);
+        userListElement.appendChild(li);
+      });
     }
 
-    function sendMessage() {
-      const chatInput = document.getElementById("chatInput");
-      const chatHistory = document.getElementById("chatHistory");
-      const message = chatInput.value.trim();
+    function searchUser() {
+      const query = searchInput.value.toLowerCase();
+      const filteredUsers = availableUsers
+        .map(user => user.username)
+        .filter(username => username.toLowerCase().includes(query));
 
-      if (message) {
-        const chatBubble = document.createElement("div");
-        chatBubble.className = "chat-bubble";
-        chatBubble.textContent = message;
-        chatHistory.appendChild(chatBubble);
+      populateUserList(filteredUsers);
 
-        chatInput.value = ""; 
-        chatHistory.scrollTop = chatHistory.scrollHeight; 
+      if (filteredUsers.length === 0) {
+        userListElement.innerHTML = "<li class='no-user'>No user found</li>";
       }
     }
 
-    function logout() {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
+    function selectUser(user) {
+      activeUser = user;
+
+      // Show chat box
+      chatBox.style.display = "block";
+
+      // Update chat header
+      chatWithHeader.textContent = `Chat with ${user}`;
+
+      // Enable input and send button
+      chatInput.disabled = false;
+      sendButton.disabled = false;
+
+      // Load chat history
+      loadChatHistory(user);
+    }
+
+    function loadChatHistory(user) {
+      chatHistoryElement.innerHTML = ""; // Clear existing messages
+      const chatKey = getChatKey(loggedInUser, user);
+      const chatMessages = JSON.parse(localStorage.getItem(chatKey)) || [];
+
+      chatMessages.forEach(message => {
+        const chatBubble = document.createElement("div");
+        chatBubble.className = message.sender === loggedInUser ? "chat-bubble me" : "chat-bubble";
+        chatBubble.textContent = message.text;
+        chatHistoryElement.appendChild(chatBubble);
+      });
+
+      chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight; // Scroll to the bottom
+    }
+
+    function sendMessage() {
+      const messageText = chatInput.value.trim();
+      if (messageText && activeUser) {
+        const chatKey = getChatKey(loggedInUser, activeUser);
+        const chatMessages = JSON.parse(localStorage.getItem(chatKey)) || [];
+
+        // Add new message to chat history
+        const newMessage = { sender: loggedInUser, text: messageText };
+        chatMessages.push(newMessage);
+        localStorage.setItem(chatKey, JSON.stringify(chatMessages));
+
+        // Display the message in the chat window
+        const chatBubble = document.createElement("div");
+        chatBubble.className = "chat-bubble me";
+        chatBubble.textContent = messageText;
+        chatHistoryElement.appendChild(chatBubble);
+
+        chatInput.value = ""; // Clear input
+        chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight; // Scroll to the bottom
+      }
+    }
+
+    function getChatKey(user1, user2) {
+      return [user1, user2].sort().join("_");
+    }
+
+    function closeChatBox() {
+      chatBox.style.display = "none"; // Hide the chat box
+      chatInput.disabled = true;
+      sendButton.disabled = true;
+      chatWithHeader.textContent = "Chat"; // Reset header
     }
   </script>
 </body>
