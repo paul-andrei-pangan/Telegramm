@@ -12,10 +12,15 @@
     <source src="videos/backV.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
   </video>
+
   <div class="sidebar">
-    <h2 id="userFullName">Users</h2> <!-- This will be updated dynamically -->
+    <!-- Profile Section -->
+    <div class="profile-section">
+      <img id="sidebarProfilePicture" src="img/default-profile.jpg" alt="Profile Picture" width="100" style="border-radius: 50%;">
+      <h2 id="userFullName">Users</h2> <!-- Dynamically updated -->
+    </div>
     <input type="text" id="searchInput" placeholder="Search user..." oninput="searchUser()" class="search-bar" />
-    <ul id="userList" class="menu"></ul> <!-- User list populated here -->
+    <ul id="userList" class="menu"></ul> <!-- User list populated dynamically -->
   </div>
 
   <div class="dashboard-container">
@@ -28,9 +33,9 @@
           <h3>My Profile</h3>
           <img src="img/prof.jpg" alt="Profile Icon" />
         </div>
-        <div class="chart-box" onclick="window.location.href='contacts.html'">
-          <h3>Contacts</h3>
-          <img src="img/cont.png" alt="Contact Icon" />
+        <div class="chart-box" onclick="window.location.href='developer.html'">
+          <h3>developer</h3>
+          <img src="img/dev.png" alt="Contact Icon" />
         </div>
         <div class="chart-box" onclick="window.location.href='videos.html'">
           <h3>Your Videos</h3>
@@ -50,18 +55,19 @@
         </div>
       </div>
 
-      <!-- Chat Box -->
-      <div id="chatBox" class="chat-window" style="display: none;">
-        <div class="chat-header">
-          <h3 id="chatWith">Chat</h3>
-          <button class="close-chat" onclick="closeChatBox()">✖</button>
-        </div>
-        <div id="chatHistory" class="chat-history"></div>
-        <div class="chat-input-container">
-          <input type="text" id="chatInput" class="chat-input" placeholder="Type your message here..." disabled />
-          <button onclick="sendMessage()" class="send-button" disabled>Send</button>
-        </div>
-      </div>
+<!-- Chat Box -->
+<div id="chatBox" class="chat-window" style="display: none;">
+  <div class="chat-header">
+    <img id="chatProfilePicture" src="img/default-profile.jpg" alt="Profile Picture" class="chat-profile-pic">
+    <h3 id="chatWith">Chat</h3>
+    <button class="close-chat" onclick="closeChatBox()">✖</button>
+  </div>
+  <div id="chatHistory" class="chat-history"></div>
+  <div class="chat-input-container">
+    <input type="text" id="chatInput" class="chat-input" placeholder="Type your message here..." disabled />
+    <button onclick="sendMessage()" class="send-button" disabled>Send</button>
+  </div>
+</div>
     </div>
   </div>
 
@@ -73,7 +79,9 @@
   </div>
 
   <script>
-    // JavaScript functions for interaction and functionality
+    // Elements
+    const userFullNameElement = document.getElementById("userFullName");
+    const sidebarProfilePicture = document.getElementById("sidebarProfilePicture");
     const chatBox = document.getElementById("chatBox");
     const chatHistoryElement = document.getElementById("chatHistory");
     const chatInput = document.getElementById("chatInput");
@@ -81,17 +89,27 @@
     const userListElement = document.getElementById("userList");
     const chatWithHeader = document.getElementById("chatWith");
     const searchInput = document.getElementById("searchInput");
-    const userFullNameElement = document.getElementById("userFullName");
-    
-    let activeUser = null; 
+
+    let activeUser = null; // Selected user for chat
     const loggedInUser = localStorage.getItem("loggedInUser");
     const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
     const loggedInUserInfo = registeredUsers.find(user => user.username === loggedInUser);
     const loggedInUserFullName = loggedInUserInfo ? loggedInUserInfo.fullName : "User";
 
-    userFullNameElement.textContent = loggedInUserFullName;  // Update the sidebar with the logged-in user's full name
+    // Update sidebar with logged-in user's name and profile picture
+    function loadProfile() {
+      const userData = JSON.parse(localStorage.getItem('userData')) || {
+        profilePicture: "img/default-profile.jpg",
+        fullName: "Your Full Name"
+      };
+      sidebarProfilePicture.src = userData.profilePicture;
+      userFullNameElement.textContent = userData.fullName || "User";
+    }
 
+    loadProfile();
+
+    // Populate user list excluding the logged-in user
     const availableUsers = registeredUsers.filter(user => user.username !== loggedInUser);
     populateUserList(availableUsers.map(user => user.username));
 
@@ -188,37 +206,6 @@
       localStorage.removeItem("loggedInUser");
       window.location.href = "login.html";
     }
-    function viewProfile() {
-      // Add functionality to navigate to the profile page or show profile details
-      alert("You clicked on My Profile");
-    }
-
-    function viewContact() {
-      // Add functionality to navigate to the contacts page or show contact details
-      alert("You clicked on Contacts");
-    }
-
-    function viewVideos() {
-      // Add functionality to navigate to the videos page or show video list
-      alert("You clicked on Your Videos");
-    }
-
-    function viewChatHistory() {
-      // Add functionality to navigate to the chat history page or show chat history
-      alert("You clicked on Chat History");
-    }
-
-    function viewSettings() {
-      // Add functionality to navigate to the settings page or show settings options
-      alert("You clicked on Settings");
-    }
-
-    function viewAbout() {
-      // Add functionality to navigate to the About page or show information about the app
-      alert("You clicked on About");
-    }
-
   </script>
-
 </body>
 </html>
