@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Real-Time Chat Dashboard</title>
   <link rel="stylesheet" href="css/dstyle.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> <!-- TeleGanda font -->
 </head>
 <body>
+  
   <div class="dashboard-container">
     <!-- Sidebar -->
     <div class="sidebar">
@@ -20,6 +22,27 @@
       />
       <ul id="userList" class="menu">
         <!-- User list will be dynamically populated -->
+        <li>
+          <span onclick="viewProfile()">My Profile</span>
+          <img src="img/" alt="Profile Picture">
+        </li>
+        <li>
+          <span onclick="viewContact()">Contact</span>
+          <img src="contact.jpg" alt="Contact Icon">
+        </li>
+        <li>
+          <span onclick="viewCallsHistory()">Calls History</span>
+          <img src="calls.jpg" alt="Calls Icon">
+        </li>
+        <li>
+          <span onclick="viewAbout()">About</span>
+          <img src="about.jpg" alt="About Icon">
+        </li>
+        <!-- Logout Link -->
+        <li>
+          <span onclick="logout()">Logout</span>
+          <img src="logout.jpg" alt="Logout Icon">
+        </li>
       </ul>
     </div>
 
@@ -45,6 +68,17 @@
     </div>
   </div>
 
+  <!-- Header with features -->
+  <div class="header">
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    <ul class="menu">
+      <li onclick="viewProfile()">My Profile</li>
+      <li onclick="viewContact()">Contact</li>
+      <li onclick="viewCallsHistory()">Calls History</li>
+      <li onclick="viewAbout()">About</li>
+    </ul>
+  </div>
+
   <script>
     const chatBox = document.getElementById("chatBox");
     const chatHistoryElement = document.getElementById("chatHistory");
@@ -54,7 +88,7 @@
     const chatWithHeader = document.getElementById("chatWith");
     const searchInput = document.getElementById("searchInput");
     const userFullNameElement = document.getElementById("userFullName");
-
+    
     let activeUser = null; // Currently selected user to chat with
     const loggedInUser = localStorage.getItem("loggedInUser"); // Logged-in username
     const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
@@ -157,6 +191,34 @@
       chatInput.disabled = true;
       sendButton.disabled = true;
       chatWithHeader.textContent = "Chat"; // Reset header
+    }
+
+    // Toggle menu visibility
+    function toggleMenu() {
+      const menu = document.querySelector(".header .menu");
+      menu.classList.toggle("show");
+    }
+
+    // Placeholder functions for the menu items
+    function viewProfile() {
+      alert("View Profile clicked");
+    }
+
+    function viewContact() {
+      alert("Contact clicked");
+    }
+
+    function viewCallsHistory() {
+      alert("Calls History clicked");
+    }
+
+    function viewAbout() {
+      alert("About clicked");
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html"; // Redirect to login page
     }
   </script>
 </body>

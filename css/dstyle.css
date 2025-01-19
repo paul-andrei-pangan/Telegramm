@@ -1,7 +1,6 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f3f6fa;
   display: flex;
   height: 100vh;
 }
@@ -10,11 +9,12 @@ body {
 .dashboard-container {
   display: flex;
   width: 100%;
+
 }
 
 /* Sidebar */
 .sidebar {
-  width: 20%;
+  width: 200px;
   background-color: #0088cc;
   color: #fff;
   padding: 20px;
@@ -50,21 +50,6 @@ body {
   background-color: #005b87;
 }
 
-.logout-btn {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  text-align: center;
-}
-
-.logout-btn:hover {
-  background-color: #c0392b;
-}
 
 /* Main content */
 .main-content {
@@ -287,3 +272,63 @@ header h1 {
   color: #333;
   align-self: flex-start;
 }
+  /* Add styles for the header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    background-color: #333;
+    padding: 10px;
+    color: white;
+  }
+  
+  .header .menu {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .header .menu li {
+    margin: 10px 0;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .header .menu-btn {
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  .header .menu.show {
+    display: block;
+  }
+  
+  /* Add some spacing for sidebar */
+  .dashboard-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  
+  
+  /* Menu item styles */
+  .sidebar .menu li {
+    margin-bottom: 20px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar .menu li img {
+    display: block;
+    margin: 0 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .sidebar .menu li:hover {
+    background-color: #444;
+    border-radius: 5px;
+  }
