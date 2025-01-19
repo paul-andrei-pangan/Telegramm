@@ -13,7 +13,6 @@
       <h2>Dashboard</h2>
       <ul class="menu">
         <li><a href="#" class="active">Home</a></li>
-        <li><a href="#">Chats</a></li>
         <li><a href="#">Settings</a></li>
         <li><a href="#" onclick="logout()">Logout</a></li>
       </ul>
@@ -24,25 +23,25 @@
       <header>
         <h1>Welcome, <span id="username"></span>!</h1>
       </header>
-      <section class="features">
-        <div class="feature-box">
-          <h3></h3>
-          <p></p>
+      <section class="chat-container">
+        <div id="chatHistory" class="chat-history">
+          <!-- Chat messages will appear here -->
         </div>
-        <div class="feature-box">
-          <h3></h3>
-          <p></p>
-        </div>
-        <div class="feature-box">
-          <h3></h3>
-          <p></p>
+        <div class="chat-input-container">
+          <input
+            type="text"
+            id="chatInput"
+            class="chat-input"
+            placeholder="Type your message here..."
+          />
+          <button onclick="sendMessage()" class="send-button">Send</button>
         </div>
       </section>
     </div>
   </div>
 
   <script>
-    const loggedInUser = localStorage.getItem('loggedInUser');
+    const loggedInUser = localStorage.getItem("loggedInUser");
 
     if (!loggedInUser) {
       window.location.href = "login.html";
@@ -50,8 +49,24 @@
       document.getElementById("username").textContent = loggedInUser;
     }
 
+    function sendMessage() {
+      const chatInput = document.getElementById("chatInput");
+      const chatHistory = document.getElementById("chatHistory");
+      const message = chatInput.value.trim();
+
+      if (message) {
+        const chatBubble = document.createElement("div");
+        chatBubble.className = "chat-bubble";
+        chatBubble.textContent = message;
+        chatHistory.appendChild(chatBubble);
+
+        chatInput.value = ""; 
+        chatHistory.scrollTop = chatHistory.scrollHeight; 
+      }
+    }
+
     function logout() {
-      localStorage.removeItem('loggedInUser');
+      localStorage.removeItem("loggedInUser");
       window.location.href = "login.html";
     }
   </script>
