@@ -39,7 +39,7 @@
   <script>
     // Get registered users from localStorage or initialize an empty array
     const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-
+  
     function signup() {
       const fullName = document.getElementById("fullName").value.trim();
       const contact = document.getElementById("contact").value.trim();
@@ -47,10 +47,10 @@
       const username = document.getElementById("signupUsername").value.trim();
       const password = document.getElementById("signupPassword").value.trim();
       const message = document.getElementById("signupMessage");
-
+  
       // Check if username already exists
       const isUserExists = registeredUsers.some(user => user.username === username);
-
+  
       if (isUserExists) {
         message.textContent = "Username already exists!";
         message.style.color = "red";
@@ -58,7 +58,7 @@
         // Add new user to the registered users list
         registeredUsers.push({ fullName, contact, address, username, password });
         localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
-
+  
         // Success message and redirect to login page
         message.textContent = "Signup successful! You can now login.";
         message.style.color = "green";
@@ -71,5 +71,6 @@
       }
     }
   </script>
+  
 </body>
 </html>

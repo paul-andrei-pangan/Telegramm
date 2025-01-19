@@ -27,19 +27,23 @@
       const username = document.getElementById("loginUsername").value.trim();
       const password = document.getElementById("loginPassword").value.trim();
       const message = document.getElementById("loginMessage");
-
+  
       // Retrieve registered users from localStorage
       const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-
+  
       // Check if the user exists
       const user = registeredUsers.find(user => user.username === username && user.password === password);
-
+  
       if (user) {
         // Login successful, save the logged-in user to localStorage
         localStorage.setItem("loggedInUser", username);
+        
+        // Save the full name of the logged-in user for use in the sidebar
+        localStorage.setItem("loggedInUserFullName", user.fullName);
+  
         message.textContent = "Login successful! Redirecting to the dashboard...";
         message.style.color = "green";
-
+  
         // Redirect to the dashboard after 2 seconds
         setTimeout(() => {
           window.location.href = "dashboard.html";
@@ -51,5 +55,6 @@
       }
     }
   </script>
+  
 </body>
 </html>

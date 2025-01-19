@@ -3,12 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat History</title>
-  <link rel="stylesheet" href="css/dstyle.css">
+  <title>My Profile</title>
+  <link rel="stylesheet" href="css/features.css">
 </head>
 <body>
-  <h1>Chat History</h1>
-  <p>View your past conversations here.</p>
+  <h1>My Profile</h1>
+
+  <div class="profile-container">
+    <!-- Profile Picture Section -->
+    <div class="profile-pic">
+      <img id="profilePicture" src="img/default-profile.jpg" alt="Profile Picture" width="150">
+      <br>
+      <input type="file" id="profilePicInput" accept="image/*" style="display: none;" onchange="uploadProfilePicture(event)">
+      <button onclick="document.getElementById('profilePicInput').click()">Change Picture</button>
+    </div>
+
+    <!-- Profile Details Section -->
+    <div class="profile-details">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" placeholder="Enter your full name">
+      
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email">
+      
+      <label for="username">Username:</label>
+      <input type="text" id="username" placeholder="Enter your username">
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter your password">
+    </div>
+
+    <!-- Profile Actions -->
+    <div class="profile-actions">
+      <button onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+
   <a href="dashboard.html">Back to Dashboard</a>
+
+  <script>
+    // Default user data
+    const defaultUserData = {
+      profilePicture: "img/default-profile.jpg",
+      fullName: "Your Full Name",
+      email: "your.email@example.com",
+      username: "yourusername",
+      password: "yourpassword"
+    };
+
+    // Load user profile from localStorage or use default data
+    function loadProfile() {
+      const userData = JSON.parse(localStorage.getItem('userData')) || defaultUserData;
+
+      document.getElementById("profilePicture").src = userData.profilePicture;
+      document.getElementById("fullName").value = userData.fullName;
+      document.getElementById("email").value = userData.email;
+      document.getElementById("username").value = userData.username;
+      document.getElementById("password").value = userData.password;
+    }
+
+    // Save profile updates to localStorage
+    function saveProfile() {
+      const updatedUserData = {
+        profilePicture: document.getElementById("profilePicture").src,
+        fullName: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      };
+
+      localStorage.setItem('userData', JSON.stringify(updatedUserData));
+      alert("Profile updated successfully!");
+    }
+
+    // Upload a new profile picture
+    function uploadProfilePicture(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const newProfilePicture = e.target.result;
+
+          // Update the profile picture in the DOM
+          document.getElementById("profilePicture").src = newProfilePicture;
+
+          // Save the updated profile picture to localStorage
+          const userData = JSON.parse(localStorage.getItem('userData')) || defaultUserData;
+          userData.profilePicture = newProfilePicture;
+          localStorage.setItem('userData', JSON.stringify(userData));
+        };
+
+        reader.readAsDataURL(file); // Read file as a Data URL
+      }
+    }
+
+    // Load the profile when the page is loaded
+    window.onload = loadProfile;
+  </script>
 </body>
 </html>

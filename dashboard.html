@@ -13,45 +13,42 @@
     Your browser does not support HTML5 video.
   </video>
   <div class="sidebar">
-    <h2 id="userFullName">Users</h2>
+    <h2 id="userFullName">Users</h2> <!-- This will be updated dynamically -->
     <input type="text" id="searchInput" placeholder="Search user..." oninput="searchUser()" class="search-bar" />
-    <ul id="userList" class="menu">
-
+    <ul id="userList" class="menu"></ul> <!-- User list populated here -->
   </div>
 
   <div class="dashboard-container">
     <div class="main-content">
       <h1 class="centered-title">TeleGanda</h1>
       
-<!-- Chart Boxes -->
-<div class="chart-boxes">
-  <div class="chart-box" onclick="window.location.href='profile.html'">
-    <h3>My Profile</h3>
-    <img src="img/prof.jpg" alt="Profile Icon" />
-  </div>
-  <div class="chart-box" onclick="window.location.href='contacts.html'">
-    <h3>Contacts</h3>
-    <img src="img/cont.png" alt="Contact Icon" />
-  </div>
-  <div class="chart-box" onclick="window.location.href='videos.html'">
-    <h3>Your Videos</h3>
-    <img src="img/vid.png" alt="Videos Icon" />
-  </div>
-  <div class="chart-box" onclick="window.location.href='chat_history.html'">
-    <h3>Chat History</h3>
-    <img src="img/chat.png" alt="Chat History Icon" />
-  </div>
-  <div class="chart-box" onclick="window.location.href='settings.html'">
-    <h3>Settings</h3>
-    <img src="img/set.png" alt="Settings Icon" />
-  </div>
-  <div class="chart-box" onclick="window.location.href='about.html'">
-    <h3>About</h3>
-    <img src="img/ab.png" alt="About Icon" />
-  </div>
-</div>
-
-
+      <!-- Chart Boxes -->
+      <div class="chart-boxes">
+        <div class="chart-box" onclick="window.location.href='profile.html'">
+          <h3>My Profile</h3>
+          <img src="img/prof.jpg" alt="Profile Icon" />
+        </div>
+        <div class="chart-box" onclick="window.location.href='contacts.html'">
+          <h3>Contacts</h3>
+          <img src="img/cont.png" alt="Contact Icon" />
+        </div>
+        <div class="chart-box" onclick="window.location.href='videos.html'">
+          <h3>Your Videos</h3>
+          <img src="img/vid.png" alt="Videos Icon" />
+        </div>
+        <div class="chart-box" onclick="window.location.href='chat_history.html'">
+          <h3>Chat History</h3>
+          <img src="img/chat.png" alt="Chat History Icon" />
+        </div>
+        <div class="chart-box" onclick="window.location.href='settings.html'">
+          <h3>Settings</h3>
+          <img src="img/set.png" alt="Settings Icon" />
+        </div>
+        <div class="chart-box" onclick="window.location.href='about.html'">
+          <h3>About</h3>
+          <img src="img/ab.png" alt="About Icon" />
+        </div>
+      </div>
 
       <!-- Chat Box -->
       <div id="chatBox" class="chat-window" style="display: none;">
@@ -93,7 +90,7 @@
     const loggedInUserInfo = registeredUsers.find(user => user.username === loggedInUser);
     const loggedInUserFullName = loggedInUserInfo ? loggedInUserInfo.fullName : "User";
 
-    userFullNameElement.textContent = loggedInUserFullName;
+    userFullNameElement.textContent = loggedInUserFullName;  // Update the sidebar with the logged-in user's full name
 
     const availableUsers = registeredUsers.filter(user => user.username !== loggedInUser);
     populateUserList(availableUsers.map(user => user.username));
@@ -192,34 +189,34 @@
       window.location.href = "login.html";
     }
     function viewProfile() {
-  // Add functionality to navigate to the profile page or show profile details
-  alert("You clicked on My Profile");
-}
+      // Add functionality to navigate to the profile page or show profile details
+      alert("You clicked on My Profile");
+    }
 
-function viewContact() {
-  // Add functionality to navigate to the contacts page or show contact details
-  alert("You clicked on Contacts");
-}
+    function viewContact() {
+      // Add functionality to navigate to the contacts page or show contact details
+      alert("You clicked on Contacts");
+    }
 
-function viewVideos() {
-  // Add functionality to navigate to the videos page or show video list
-  alert("You clicked on Your Videos");
-}
+    function viewVideos() {
+      // Add functionality to navigate to the videos page or show video list
+      alert("You clicked on Your Videos");
+    }
 
-function viewChatHistory() {
-  // Add functionality to navigate to the chat history page or show chat history
-  alert("You clicked on Chat History");
-}
+    function viewChatHistory() {
+      // Add functionality to navigate to the chat history page or show chat history
+      alert("You clicked on Chat History");
+    }
 
-function viewSettings() {
-  // Add functionality to navigate to the settings page or show settings options
-  alert("You clicked on Settings");
-}
+    function viewSettings() {
+      // Add functionality to navigate to the settings page or show settings options
+      alert("You clicked on Settings");
+    }
 
-function viewAbout() {
-  // Add functionality to navigate to the About page or show information about the app
-  alert("You clicked on About");
-}
+    function viewAbout() {
+      // Add functionality to navigate to the About page or show information about the app
+      alert("You clicked on About");
+    }
 
   </script>
 
