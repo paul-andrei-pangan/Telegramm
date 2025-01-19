@@ -5,70 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Real-Time Chat Dashboard</title>
   <link rel="stylesheet" href="css/dstyle.css">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> <!-- TeleGanda font -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
-  
-  <div class="dashboard-container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h2 id="userFullName">Users</h2>
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Search user..."
-        oninput="searchUser()"
-        class="search-bar"
-      />
-      <ul id="userList" class="menu">
-        <!-- User list will be dynamically populated -->
-        <li>
-          <span onclick="viewProfile()">My Profile</span>
-          <img src="img/" alt="Profile Picture">
-        </li>
-        <li>
-          <span onclick="viewContact()">Contact</span>
-          <img src="contact.jpg" alt="Contact Icon">
-        </li>
-        <li>
-          <span onclick="viewCallsHistory()">Calls History</span>
-          <img src="calls.jpg" alt="Calls Icon">
-        </li>
-        <li>
-          <span onclick="viewAbout()">About</span>
-          <img src="about.jpg" alt="About Icon">
-        </li>
-        <!-- Logout Link -->
-        <li>
-          <span onclick="logout()">Logout</span>
-          <img src="logout.jpg" alt="Logout Icon">
-        </li>
-      </ul>
-    </div>
 
-    <!-- Chat Box (Initially Hidden) -->
-    <div id="chatBox" class="chat-window" style="display: none;">
-      <div class="chat-header">
-        <h3 id="chatWith">Chat</h3>
-        <button class="close-chat" onclick="closeChatBox()">✖</button>
-      </div>
-      <div id="chatHistory" class="chat-history">
-        <!-- Chat messages will appear here -->
-      </div>
-      <div class="chat-input-container">
-        <input
-          type="text"
-          id="chatInput"
-          class="chat-input"
-          placeholder="Type your message here..."
-          disabled
-        />
-        <button onclick="sendMessage()" class="send-button" disabled>Send</button>
+  <div class="sidebar">
+    <h2 id="userFullName">Users</h2>
+    <input type="text" id="searchInput" placeholder="Search user..." oninput="searchUser()" class="search-bar" />
+    <ul id="userList" class="menu">
+      <li>
+        <span onclick="viewProfile()">My Profile</span>
+        <img src="img/" alt="Profile Picture">
+      </li>
+      <li>
+        <span onclick="viewContact()">Contact</span>
+        <img src="contact.jpg" alt="Contact Icon">
+      </li>
+      <li>
+        <span onclick="viewCallsHistory()">Calls History</span>
+        <img src="calls.jpg" alt="Calls Icon">
+      </li>
+      <li>
+        <span onclick="viewAbout()">About</span>
+        <img src="about.jpg" alt="About Icon">
+      </li>
+      <li>
+        <span onclick="logout()">Logout</span>
+        <img src="logout.jpg" alt="Logout Icon">
+      </li>
+    </ul>
+  </div>
+
+  <div class="dashboard-container">
+    <div class="main-content">
+      <!-- Centered Title -->
+      <h1 class="centered-title">TeleGanda</h1>
+
+      <!-- Chat Box -->
+      <div id="chatBox" class="chat-window" style="display: none;">
+        <div class="chat-header">
+          <h3 id="chatWith">Chat</h3>
+          <button class="close-chat" onclick="closeChatBox()">✖</button>
+        </div>
+        <div id="chatHistory" class="chat-history"></div>
+        <div class="chat-input-container">
+          <input type="text" id="chatInput" class="chat-input" placeholder="Type your message here..." disabled />
+          <button onclick="sendMessage()" class="send-button" disabled>Send</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Header with features -->
   <div class="header">
     <span class="menu-btn" onclick="toggleMenu()">☰</span>
     <ul class="menu">
@@ -89,23 +76,20 @@
     const searchInput = document.getElementById("searchInput");
     const userFullNameElement = document.getElementById("userFullName");
     
-    let activeUser = null; // Currently selected user to chat with
-    const loggedInUser = localStorage.getItem("loggedInUser"); // Logged-in username
+    let activeUser = null; 
+    const loggedInUser = localStorage.getItem("loggedInUser");
     const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-    // Fetch full name of logged-in user
     const loggedInUserInfo = registeredUsers.find(user => user.username === loggedInUser);
     const loggedInUserFullName = loggedInUserInfo ? loggedInUserInfo.fullName : "User";
 
-    // Display full name in the sidebar heading
     userFullNameElement.textContent = loggedInUserFullName;
 
-    // Populate user list
     const availableUsers = registeredUsers.filter(user => user.username !== loggedInUser);
     populateUserList(availableUsers.map(user => user.username));
 
     function populateUserList(users) {
-      userListElement.innerHTML = ""; // Clear the user list
+      userListElement.innerHTML = "";
       users.forEach(user => {
         const li = document.createElement("li");
         li.textContent = user;
@@ -131,22 +115,24 @@
     function selectUser(user) {
       activeUser = user;
 
-      // Show chat box
-      chatBox.style.display = "block";
+      // Fetch the full name of the selected user
+      const selectedUserInfo = registeredUsers.find(userInfo => userInfo.username === activeUser);
+      const fullName = selectedUserInfo ? selectedUserInfo.fullName : "User";
 
-      // Update chat header
-      chatWithHeader.textContent = `Chat with ${user}`;
+      // Show chat box and update header
+      chatBox.style.display = "block";
+      chatWithHeader.textContent = `Chat with ${fullName}`; // Display full name
 
       // Enable input and send button
       chatInput.disabled = false;
       sendButton.disabled = false;
 
-      // Load chat history
+      // Load chat history for the selected user
       loadChatHistory(user);
     }
 
     function loadChatHistory(user) {
-      chatHistoryElement.innerHTML = ""; // Clear existing messages
+      chatHistoryElement.innerHTML = "";
       const chatKey = getChatKey(loggedInUser, user);
       const chatMessages = JSON.parse(localStorage.getItem(chatKey)) || [];
 
@@ -157,7 +143,7 @@
         chatHistoryElement.appendChild(chatBubble);
       });
 
-      chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight; // Scroll to the bottom
+      chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
     }
 
     function sendMessage() {
@@ -166,19 +152,17 @@
         const chatKey = getChatKey(loggedInUser, activeUser);
         const chatMessages = JSON.parse(localStorage.getItem(chatKey)) || [];
 
-        // Add new message to chat history
         const newMessage = { sender: loggedInUser, text: messageText };
         chatMessages.push(newMessage);
         localStorage.setItem(chatKey, JSON.stringify(chatMessages));
 
-        // Display the message in the chat window
         const chatBubble = document.createElement("div");
         chatBubble.className = "chat-bubble me";
         chatBubble.textContent = messageText;
         chatHistoryElement.appendChild(chatBubble);
 
-        chatInput.value = ""; // Clear input
-        chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight; // Scroll to the bottom
+        chatInput.value = "";
+        chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
       }
     }
 
@@ -187,19 +171,17 @@
     }
 
     function closeChatBox() {
-      chatBox.style.display = "none"; // Hide the chat box
+      chatBox.style.display = "none";
       chatInput.disabled = true;
       sendButton.disabled = true;
-      chatWithHeader.textContent = "Chat"; // Reset header
+      chatWithHeader.textContent = "Chat";
     }
 
-    // Toggle menu visibility
     function toggleMenu() {
       const menu = document.querySelector(".header .menu");
       menu.classList.toggle("show");
     }
 
-    // Placeholder functions for the menu items
     function viewProfile() {
       alert("View Profile clicked");
     }
@@ -218,7 +200,7 @@
 
     function logout() {
       localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html"; // Redirect to login page
+      window.location.href = "login.html";
     }
   </script>
 </body>
