@@ -13,33 +13,41 @@
     <h2 id="userFullName">Users</h2>
     <input type="text" id="searchInput" placeholder="Search user..." oninput="searchUser()" class="search-bar" />
     <ul id="userList" class="menu">
-      <li>
-        <span onclick="viewProfile()">My Profile</span>
-        <img src="img/" alt="Profile Picture">
-      </li>
-      <li>
-        <span onclick="viewContact()">Contact</span>
-        <img src="contact.jpg" alt="Contact Icon">
-      </li>
-      <li>
-        <span onclick="viewCallsHistory()">Calls History</span>
-        <img src="calls.jpg" alt="Calls Icon">
-      </li>
-      <li>
-        <span onclick="viewAbout()">About</span>
-        <img src="about.jpg" alt="About Icon">
-      </li>
-      <li>
-        <span onclick="logout()">Logout</span>
-        <img src="logout.jpg" alt="Logout Icon">
-      </li>
-    </ul>
+
   </div>
 
   <div class="dashboard-container">
     <div class="main-content">
-      <!-- Centered Title -->
       <h1 class="centered-title">TeleGanda</h1>
+      
+<!-- Chart Boxes -->
+<div class="chart-boxes">
+  <div class="chart-box" onclick="viewProfile()">
+    <h3>My Profile</h3>
+    <img src="img/prof.jpg" alt="Profile Icon" />
+  </div>
+  <div class="chart-box" onclick="viewContact()">
+    <h3>Contacts</h3>
+    <img src="img/cont.png" alt="Contact Icon" />
+  </div>
+  <div class="chart-box" onclick="viewVideos()">
+    <h3>Your Videos</h3>
+    <img src="img/vid.png" alt="Videos Icon" />
+  </div>
+  <div class="chart-box" onclick="viewChatHistory()">
+    <h3>Chat History</h3>
+    <img src="img/chat.png" alt="Chat History Icon" />
+  </div>
+  <div class="chart-box" onclick="viewSettings()">
+    <h3>Settings</h3>
+    <img src="img/set.png" alt="Settings Icon" />
+  </div>
+  <div class="chart-box" onclick="viewAbout()">
+    <h3>About</h3>
+    <img src="img/ab.png" alt="About Icon" />
+  </div>
+</div>
+
 
       <!-- Chat Box -->
       <div id="chatBox" class="chat-window" style="display: none;">
@@ -59,14 +67,12 @@
   <div class="header">
     <span class="menu-btn" onclick="toggleMenu()">☰</span>
     <ul class="menu">
-      <li onclick="viewProfile()">My Profile</li>
-      <li onclick="viewContact()">Contact</li>
-      <li onclick="viewCallsHistory()">Calls History</li>
-      <li onclick="viewAbout()">About</li>
+      <li onclick="logout()">Logout</li>
     </ul>
   </div>
 
   <script>
+    // JavaScript functions for interaction and functionality
     const chatBox = document.getElementById("chatBox");
     const chatHistoryElement = document.getElementById("chatHistory");
     const chatInput = document.getElementById("chatInput");
@@ -114,20 +120,15 @@
 
     function selectUser(user) {
       activeUser = user;
-
-      // Fetch the full name of the selected user
       const selectedUserInfo = registeredUsers.find(userInfo => userInfo.username === activeUser);
       const fullName = selectedUserInfo ? selectedUserInfo.fullName : "User";
 
-      // Show chat box and update header
       chatBox.style.display = "block";
-      chatWithHeader.textContent = `Chat with ${fullName}`; // Display full name
+      chatWithHeader.textContent = `Chat with ${fullName}`;
 
-      // Enable input and send button
       chatInput.disabled = false;
       sendButton.disabled = false;
 
-      // Load chat history for the selected user
       loadChatHistory(user);
     }
 
@@ -182,26 +183,41 @@
       menu.classList.toggle("show");
     }
 
-    function viewProfile() {
-      alert("View Profile clicked");
-    }
-
-    function viewContact() {
-      alert("Contact clicked");
-    }
-
-    function viewCallsHistory() {
-      alert("Calls History clicked");
-    }
-
-    function viewAbout() {
-      alert("About clicked");
-    }
-
     function logout() {
       localStorage.removeItem("loggedInUser");
       window.location.href = "login.html";
     }
+    function viewProfile() {
+  // Add functionality to navigate to the profile page or show profile details
+  alert("You clicked on My Profile");
+}
+
+function viewContact() {
+  // Add functionality to navigate to the contacts page or show contact details
+  alert("You clicked on Contacts");
+}
+
+function viewVideos() {
+  // Add functionality to navigate to the videos page or show video list
+  alert("You clicked on Your Videos");
+}
+
+function viewChatHistory() {
+  // Add functionality to navigate to the chat history page or show chat history
+  alert("You clicked on Chat History");
+}
+
+function viewSettings() {
+  // Add functionality to navigate to the settings page or show settings options
+  alert("You clicked on Settings");
+}
+
+function viewAbout() {
+  // Add functionality to navigate to the About page or show information about the app
+  alert("You clicked on About");
+}
+
   </script>
+
 </body>
 </html>

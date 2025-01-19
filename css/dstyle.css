@@ -2,14 +2,19 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
+  background-image: url('/img/back.jpg');
 }
 
 /* Dashboard container */
 .dashboard-container {
   display: flex;
   width: 100%;
-
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 /* Sidebar */
@@ -27,6 +32,8 @@ body {
   left: 0; /* Stick to the left side */
   top: 0; /* Stick to the top */
   z-index: 1000; /* Ensure it's on top of other elements */
+  box-sizing: border-box;
+  position: fixed;
 }
 
 
@@ -342,8 +349,30 @@ header h1 {
   .centered-title {
     text-align: center;
     font-family: 'Great Vibes', cursive;
-    font-size: 100px;
+    font-size: 150px;
     color: #0088cc; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     margin-top: 50px;
   }
+  .chart-boxes {
+    display: flex; /* Enable flexbox layout */
+    justify-content: space-between; /* Space out the boxes evenly */
+    gap: 20px; /* Add space between the boxes */
+    flex-wrap: wrap; /* Allow the boxes to wrap to the next line if needed */
+}
+
+.chart-box {
+    display: flex; /* Enable flexbox inside each chart box */
+    flex-direction: column; /* Align content vertically within the box */
+    align-items: center; /* Center the content horizontally */
+    text-align: center; /* Center text inside each box */
+}
+
+.chart-box img { 
+    width: 70px; /* Adjust the width to make the icon smaller */
+    height: 70px; /* Adjust the height to match the width */
+    border-radius: 50%; /* Ensure the image remains circular */
+    object-fit: cover; /* Ensure the image fits well within the circle */
+    margin-bottom: 10px; /* Add some space below the icon */
+}
+
