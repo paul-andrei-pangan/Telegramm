@@ -3,12 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Videos</title>
-  <link rel="stylesheet" href="css/dstyle.css">
+  <title>Your Media Album</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #555;
+    }
+
+    .media-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .media-item {
+      background-color: #fff;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      width: 300px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .media-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .media-item img, 
+    .media-item video {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .media-item h3 {
+      font-size: 1.2em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .media-item p {
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Your Videos</h1>
-  <p>Here, you can manage your uploaded videos.</p>
+  <h1>Your Media Album</h1>
+  <p>Here, you can view your uploaded videos and images.</p>
+
+  <div class="media-container">
+    <!-- Image 1 -->
+    <div class="media-item">
+      <img src="img/1.jpg" alt="Sample Image 1">
+      <h3>Beautiful Sunset</h3>
+      <p>Captured during my vacation in Bali.</p>
+    </div>
+
+    <!-- Video 1 -->
+    <div class="media-item">
+      <video controls>
+        <source src="videos/1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Family Picnic</h3>
+      <p>A fun day with the family in the park.</p>
+    </div>
+
+    <!-- Image 2 -->
+    <div class="media-item">
+      <img src="img/2.jpg" alt="Sample Image 2">
+      <h3>Mountain Hike</h3>
+      <p>A breathtaking view from the peak of the mountain.</p>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="media-item">
+      <video controls>
+        <source src="videos/2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Beach Waves</h3>
+      <p>Relaxing sound of waves from my beach trip.</p>
+    </div>
+
+    <!-- Image 3 -->
+    <div class="media-item">
+      <img src="img/3.jpg" alt="Sample Image 3">
+      <h3>City Lights</h3>
+      <p>Night view of the bustling city.</p>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="media-item">
+      <video controls>
+        <source src="videos/3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Birthday Party</h3>
+      <p>A memorable celebration with friends.</p>
+    </div>
+
+    <!-- Image 4 -->
+    <div class="media-item">
+      <img src="img/4.jpg" alt="Sample Image 4">
+      <h3>Winter Wonderland</h3>
+      <p>Snowy landscapes captured during winter.</p>
+    </div>
+
+    <!-- Video 4 -->
+    <div class="media-item">
+      <video controls>
+        <source src="videos/4.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Road Trip</h3>
+      <p>A scenic drive through winding roads.</p>
+    </div>
+
+    <!-- Image 5 -->
+    <div class="media-item">
+      <img src="img/5.jpg" alt="Sample Image 5">
+      <h3>Forest Adventure</h3>
+      <p>Exploring the dense forest trails.</p>
+    </div>
+
+    <!-- Video 5 -->
+    <div class="media-item">
+      <video controls>
+        <source src="videos/5.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h3>Concert Night</h3>
+      <p>Live music experience with my favorite band.</p>
+    </div>
+  </div>
+
   <a href="dashboard.html">Back to Dashboard</a>
 </body>
 </html>
