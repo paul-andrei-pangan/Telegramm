@@ -14,7 +14,6 @@
       background-color: #f8f9fa;
     }
 
-
     .sidebar {
       width: 250px;
       background-color: #0088cc;
@@ -66,7 +65,7 @@
       background-color: #003f73;
     }
 
-    
+   
     .content {
       flex: 1;
       padding: 20px;
@@ -121,12 +120,14 @@
 </head>
 <body>
 
-  
+ 
   <div class="sidebar">
     <div class="menu">
       <h2>Settings</h2>
       <a href="#" onclick="showSection('profile')">Profile</a>
       <a href="#" onclick="showSection('notifications')">Notifications</a>
+      <a href="#" onclick="showSection('appearance')">Appearance</a>
+      <a href="#" onclick="showSection('privacy')">Privacy & Security</a>
     </div>
 
     <div class="back-to-dashboard">
@@ -150,7 +151,6 @@
       </div>
     </div>
 
-    <!-- Notifications Section -->
     <div id="notifications" class="hidden">
       <h2>Notifications</h2>
       <p>Manage your notification preferences.</p>
@@ -168,15 +168,45 @@
         </div>
       </div>
     </div>
+
+    <div id="appearance" class="hidden">
+      <h2>Appearance</h2>
+      <p>Choose between light and dark themes.</p>
+      <div class="form-section">
+        <div class="form-group">
+          <label for="theme">Theme:</label>
+          <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button onclick="saveAppearance()">Save</button>
+        </div>
+      </div>
+    </div>
+
+   
+    <div id="privacy" class="hidden">
+      <h2>Privacy & Security</h2>
+      <p>Manage your privacy and security settings.</p>
+      <div class="form-section">
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" placeholder="Enter new password">
+        </div>
+        <div class="form-group">
+          <button>Update Password</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
     function showSection(sectionId) {
-      // Hide all sections
+     
       const sections = document.querySelectorAll('.content > div');
       sections.forEach(section => section.classList.add('hidden'));
-
-      // Show the selected section
       document.getElementById(sectionId).classList.remove('hidden');
     }
 
