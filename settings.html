@@ -4,11 +4,200 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
-  <link rel="stylesheet" href="css/dstyle.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      background-color: #f8f9fa;
+    }
+
+
+    .sidebar {
+      width: 250px;
+      background-color: #0088cc;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .sidebar .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .sidebar a:hover {
+      background-color: #005f99;
+    }
+
+    .back-to-dashboard {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .back-to-dashboard a {
+      display: inline-block;
+      background-color: #005f99;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .back-to-dashboard a:hover {
+      background-color: #003f73;
+    }
+
+    
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #ffffff;
+      overflow-y: auto;
+    }
+
+    .content h1 {
+      font-size: 24px;
+      color: #333;
+    }
+
+    
+    .hidden {
+      display: none;
+    }
+
+    .form-section {
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group button {
+      background-color: #0088cc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-group button:hover {
+      background-color: #005f99;
+    }
+  </style>
 </head>
 <body>
-  <h1>Settings</h1>
-  <p>Customize your preferences here.</p>
-  <a href="dashboard.html">Back to Dashboard</a>
+
+  
+  <div class="sidebar">
+    <div class="menu">
+      <h2>Settings</h2>
+      <a href="#" onclick="showSection('profile')">Profile</a>
+      <a href="#" onclick="showSection('notifications')">Notifications</a>
+    </div>
+
+    <div class="back-to-dashboard">
+      <a href="dashboard.html">Back to Dashboard</a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div id="profile" class="hidden">
+      <h2>Change Username</h2>
+      <p>Customize your profile by updating your username.</p>
+      <div class="form-section">
+        <div class="form-group">
+          <label for="username">New Username:</label>
+          <input type="text" id="username" placeholder="Enter new username">
+        </div>
+        <div class="form-group">
+          <button onclick="saveUsername()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Section -->
+    <div id="notifications" class="hidden">
+      <h2>Notifications</h2>
+      <p>Manage your notification preferences.</p>
+      <div class="form-section">
+        <div class="form-group">
+          <label>Enable Notifications:</label>
+          <input type="checkbox" checked>
+        </div>
+        <div class="form-group">
+          <label>Sound:</label>
+          <input type="checkbox">
+        </div>
+        <div class="form-group">
+          <button onclick="saveNotifications()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.content > div');
+      sections.forEach(section => section.classList.add('hidden'));
+
+      // Show the selected section
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    function saveUsername() {
+      const username = document.getElementById('username').value;
+      if (username) {
+        alert(`Username changed to: ${username}`);
+      } else {
+        alert('Please enter a valid username.');
+      }
+    }
+
+    function saveNotifications() {
+      alert('Notification settings saved!');
+    }
+
+    function saveAppearance() {
+      const theme = document.getElementById('theme').value;
+      alert(`Theme changed to: ${theme}`);
+    }
+  </script>
+
 </body>
 </html>
